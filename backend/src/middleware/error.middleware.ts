@@ -9,6 +9,9 @@ const errorHandler: ErrorRequestHandler = (
     next: NextFunction
 ) => {
    
+
+
+    let erros = err
     let error = { ...err };
     error.message = err.message;
     
@@ -18,6 +21,15 @@ const errorHandler: ErrorRequestHandler = (
     // 2. Track the text status string separately
     error.status = err.status || "error";
 
+
+    if(erros instanceof  ApiError) {
+        return res.status(statusCode).json({
+                status: statusCode, // Strings belong here inside the JSON body!
+                message: erros.message,
+                stack: err.stack,
+            erros,
+        });
+    }
     // Development Environment
     if (NODE_ENV === "development") {
         // FIX: Changed error.status to statusCode

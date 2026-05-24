@@ -19,7 +19,7 @@ app.use(cors(
 app.get('/', (req: Request, res:Response)=>{
     return res.send('hello');
 })
-import authRouter from "./modules/auth/routes/auth.route.js"
+import authRouter from "./modules/auth/auth.route.js"
 
 app.use("/api/v1/auth", authRouter);
 app.use(errorHandler)   
