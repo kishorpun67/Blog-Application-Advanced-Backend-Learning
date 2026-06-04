@@ -81,19 +81,3 @@ export class AuthRepository implements IAuthRepository{
 
 
 
-
-// export class AuthRepository {
-//     async findByEmail(email:string) {
-//         return prisma.user.findUnique({
-//             where:{
-//                 email
-//             },
-//         })
-
-//     }
-//     async createUser(data: RegisterUserData) {
-//         return prisma.user.create({
-//           data,
-//         });
-//     }
-// }

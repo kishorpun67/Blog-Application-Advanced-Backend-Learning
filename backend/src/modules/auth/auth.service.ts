@@ -1,6 +1,3 @@
-
-
-// import { AuthRepository } from "./auth.repository.js";
 import { RegisterUserData } from "./auth.dto.js";
 import { ApiError } from "../../common/utils/ApiError.js";
 import { comparePassword, hashPassword, hashRefreshToken } from "../../common/helpers/auth.helper.js";
@@ -124,7 +121,7 @@ export class  AuthService  {
         const refreshTokenHash = hashRefreshToken(verifyToken)
         const existingToken = await this.repo.findRefreshToken(refreshTokenHash)
         if(!existingToken) {
-            throw new ApiError(404, 'Invalid Refresh Token')
+            throw new ApiError(401, 'Invalid Refresh Token')
         }
         await this.repo.deleteRefreshTokenById(existingToken.id)
         return true;
@@ -145,40 +142,4 @@ export class  AuthService  {
 
     
 }
-
-// export class AuthService {
-//     private  this.repo =new AuthRepository()
-
-//     async  registerUser(data:RegisterUserData) {
-//         const existingUser = await this.authRepository.findByEmail(data.email)
-
-//         if(existingUser) {
-//             throw  new ApiError(409,'User already existed')
-//         }
-
-//         const hashPassword = await bcrypt.hash(
-//             data.password,
-//             10
-//         )
-
-//         const user : any = this.authRepository.createUser({
-//             ...data,
-//             password: hashPassword
-//         })
-
-//         const accessToken = generateAccessToken({
-//             userId: user.id,
-//         });
-        
-//         return {
-//             user: {
-//               id: user.id,
-//               name: user.name,
-//               email: user.email,
-//               accessToken:accessToken
-//             },
-//         };
-
-//     }
-// }
 

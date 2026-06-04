@@ -1,7 +1,6 @@
 import { Request, Response, NextFunction } from "express"; // 1. Added NextFunction here
 import { asyncHandler } from "../../common/utils/asyncHandler.js";
-import { authService } from "./auth.service.js";
-import { UserResponseDto } from "./auth.response.js";
+import { authService } from "./auth.container.js";
 
 export const registerUserController = asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
   
@@ -37,7 +36,6 @@ export const  loginUserController = asyncHandler(async(req:Request, res:Response
 })
 
 export const refreshTokenController = asyncHandler(async(req:Request, res:Response)=>{
-    // return res.send(req.body + 'helo')
 
     const result = await authService.refreshToken(req.body)
     return res.status(201).json({

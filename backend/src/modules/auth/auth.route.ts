@@ -3,6 +3,7 @@ import { currentUserController, loginUserController, logoutAllController, logout
 import { loginSchema, refeshTokenSchema, registerSchema } from "./auth.validator.js"
 import { validate } from "../../middleware/validate.middleware.js"
 import { verifyUser } from "../../middleware/auth.middleware.js"
+import { authService } from "./auth.container.js"
 
 const router = Router()
 router.route("/register").post(
@@ -21,7 +22,7 @@ router.route("/refreshToken").post(
         validate(refeshTokenSchema),
         refreshTokenController)
 
-router.route("/me").get(verifyUser, currentUserController)
+router.route("/me").get(verifyUser(authService), currentUserController)
 router.route("/logout").post(verifyUser, logoutController)
 router.route("/logout-all").post(verifyUser, logoutAllController)
 
