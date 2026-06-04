@@ -1,0 +1,17 @@
+export interface IUser {
+    id:string;
+    username:string;
+    email:string;
+    createdAt: Date;
+}
+
+
+export type ApiResponse<T> = {
+    success:boolean
+    message:string
+    data?:T
+}
+
+export interface JWTPayload {
+    userId:string
+}

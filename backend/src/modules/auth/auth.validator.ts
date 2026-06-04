@@ -6,3 +6,22 @@ export const registerSchema = z.object({
   password: z.string().min(6, "Password must be at least 6 characters long"),
 });
 
+
+export const loginSchema = z.object({
+  email: z.email("Email is required"),
+  password: z.string("password is requried"),
+
+}); 
+
+
+
+
+export const refeshTokenSchema = z.object({
+  token: z.string()
+}).strict()
+
+export type loginDTO = z.infer<typeof loginSchema>;
+export type refreshTokenDTO = z.infer<typeof refeshTokenSchema>;
+
+
+
