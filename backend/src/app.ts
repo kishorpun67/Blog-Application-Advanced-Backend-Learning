@@ -5,9 +5,9 @@ import { FRONTEND_URL } from "./config/config.js";
 import errorHandler from "./middleware/error.middleware.js";
 
 const app = express()
-export default app
 app.use(express.json())
 app.use(cookieParser())
+app.use(express.urlencoded({extended:true}))
 app.use(cors(
     {
         origin:FRONTEND_URL,
@@ -20,6 +20,9 @@ app.get('/', (req: Request, res:Response)=>{
     return res.send('hello');
 })
 import authRouter from "./modules/auth/auth.route.js"
-
+import postRouter from "./modules/post/post.route.js"
 app.use("/api/v1/auth", authRouter);
+app.use("/api/v1/post", postRouter)
 app.use(errorHandler)   
+export default app
+

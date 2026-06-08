@@ -31,7 +31,6 @@ export class  AuthService  {
             token :hashToken,
             expiresAt : new Date(Date.now()+ 7 * 24 * 60 * 60* 1000).toISOString()
         })
-        
         return {
             user: toUserResponse(user),
             accessToken,
@@ -60,7 +59,7 @@ export class  AuthService  {
             token :hashToken,
             expiresAt : new Date(Date.now()+ 7 * 24 * 60 * 60* 1000).toISOString()
         })
-
+        
         return {
             user: toUserResponse(user),
             accessToken,
@@ -97,9 +96,10 @@ export class  AuthService  {
             token :newRefreshHashToken,
             expiresAt : new Date(Date.now()+ 7 * 24 * 60 * 60* 1000).toISOString()
         })
+        
         return {
             accessToken : newAccessToken,
-            refreshToken: newRefreshHashToken
+            refreshToken: newRefreshToken
         }
     }
 
@@ -124,13 +124,10 @@ export class  AuthService  {
             throw new ApiError(401, 'Invalid Refresh Token')
         }
         await this.repo.deleteRefreshTokenById(existingToken.id)
-        return true;
-        // const refreshToken = verifyRefreshToken(userId);
-        // const token = await this.repo.deleteRefreshTokenByUserId(userId)
-        // return token;
+        return true
     }
 
-    async  logoutAll(userId:String){
+    async  logoutAll(userId:string){
 
         if(!userId) {
             throw new ApiError(401, 'user not autenticated')

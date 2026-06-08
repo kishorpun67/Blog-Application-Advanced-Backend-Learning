@@ -12,5 +12,4 @@ export interface IAuthRepository {
     deleteRefreshTokenById(id:string):Promise<any>
     deleteRefreshTokenByToken(token:string):Promise<any>
 
-
 }   

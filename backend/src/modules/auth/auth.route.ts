@@ -23,8 +23,13 @@ router.route("/refreshToken").post(
         refreshTokenController)
 
 router.route("/me").get(verifyUser(authService), currentUserController)
-router.route("/logout").post(verifyUser, logoutController)
-router.route("/logout-all").post(verifyUser, logoutAllController)
+router.route("/logout").post(
+    // (req,res:Response)=>{
+    //     return res.send(req.body)
+    // },
+    verifyUser(authService), 
+    logoutController)
+router.route("/logout-all").post(verifyUser(authService), logoutAllController)
 
 
     
