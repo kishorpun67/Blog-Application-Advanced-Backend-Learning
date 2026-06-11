@@ -9,12 +9,13 @@ export interface IPostRepository {
     getPostsByUserId(
         userId:string
     ):Promise <Post []>
-    getPostById(
+    getPostByPostIdAndUserId(
         postId:string, 
         userId:string
 
     ):Promise <Post | null >
-    updatePostById(    
+    getPostByPostId(postId:string):Promise <Post | null>
+    updatePostByIdUserId(    
         data: {
             postId: string;
             userId: string;
@@ -23,6 +24,6 @@ export interface IPostRepository {
             imageUrl?: string;
         }
     ):Promise <Post | null>
-
+    deletPostByPostIdAndUserId(postId:string, userId:string):Promise<Post | null>
 }
 

@@ -49,3 +49,12 @@ export const updatePostController = asyncHandler(async(req:Request, res:Response
         data:result
     })
 })
+
+
+export const deletePostController = asyncHandler(async (req:Request, res:Response) =>{
+    const result  = await postService.deletPost(req.params.id as string, req.userId as string)
+    return res.status(200).json({
+        success:true,
+        message:'Post has been deleted succesfully',
+        data:result
+    })})

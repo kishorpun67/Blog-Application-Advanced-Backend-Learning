@@ -1,5 +1,5 @@
 import { da } from "zod/locales";
-import { uploadToCloudinary } from "../../common/helpers/cloudinary.helper.js";
+import { deleteFile, uploadToCloudinary } from "../../common/helpers/cloudinary.helper.js";
 import { ApiError } from "../../common/utils/ApiError.js";
 import { IPostRepository } from "./post.interface.js";
 import { createPostDTO, updatePostDTO } from "./post.schema.js";
@@ -27,7 +27,7 @@ export class PostService {
     }
 
     async getPost(postId:string ,userId:string ) {
-        return this.repo.getPostById(postId, userId)
+        return this.repo.getPostByPostIdAndUserId(postId, userId)
     }
     async updatePost(data:updatePostDTO, postId:string , userId:string,  localFilePath?:string) {
         const {title, description} = data
@@ -37,9 +37,20 @@ export class PostService {
             if (!uploadResult) {
                 throw new ApiError(500, "Image upload failed");
             }
-    
             imageUrl = uploadResult.secure_url;
         }
-        return this.repo.updatePostById({postId, userId, title, description, imageUrl})
+        return this.repo.updatePostByIdUserId({postId, userId, title, description, imageUrl})
+    }
+
+    async deletPost(postId:string, userId:string) {
+        const post = await this.repo.getPostByPostIdAndUserId(postId, userId)
+        if(!post) {
+            throw new ApiError(401,'Post not found')
+        }
+        if(post.imageUrl) {
+            await deleteFile(post.imageUrl)
+        }
+        return await this.repo.deletPostByPostIdAndUserId(postId, userId)
+        
     }
 }

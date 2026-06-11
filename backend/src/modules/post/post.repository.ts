@@ -1,4 +1,3 @@
-import { title } from "process";
 import { prisma } from "../../lib/prisma.js";
 import { IPostRepository } from "./post.interface.js";
 import { Post } from "../../../generated/prisma/index.js";
@@ -9,14 +8,14 @@ export class PostRepository implements IPostRepository{
     async createPost(data:{title: string;
         description: string;
         userId: string;
-        imageUrl?: string;}){
+        imageUrl?: string;}):Promise<Post>{
            
-        return prisma.post.create({
+        return await prisma.post.create({
             data: {
                 title: data.title,
                 description: data.description, 
                 userId:data.userId,
-                imageUrl: data?.imageUrl
+                imageUrl: data.imageUrl
             }
         });
         
@@ -29,17 +28,33 @@ export class PostRepository implements IPostRepository{
             }
         })
     }
-
-    async getPostById(postId: string, userId: string): Promise<Post | null> {
-        return await prisma.post.findUnique({
+    async getPostByPostId(postId: string): Promise<Post | null> {
+        return await prisma.post.findFirst({
             where:{
-                userId,
                 id:postId
+            },
+            include:{
+                comments:true
             }
+
         })
     }
 
-    async updatePostById(        
+    async getPostByPostIdAndUserId(postId: string, userId: string): Promise<Post | null> {
+        return await prisma.post.findFirst({
+            where:{
+                userId:userId,
+                id:postId
+            },
+            include:{
+                comments:true,
+                author:true
+            },
+            
+        })
+    }
+
+    async updatePostByIdUserId(        
         data: {
             postId: string;
             userId: string;
@@ -57,7 +72,15 @@ export class PostRepository implements IPostRepository{
             data:{
                 title : data.title,
                 description: data.description,
-                imageUrl:data.imageUrl
+                ...(data.imageUrl && { imageUrl: data.imageUrl })
+            }
+        })
+    }
+   async deletPostByPostIdAndUserId(postId:string, userId:string):Promise <Post | null> {
+        return prisma.post.delete({
+            where:{
+                id:postId,
+                userId:userId
             }
         })
     }
