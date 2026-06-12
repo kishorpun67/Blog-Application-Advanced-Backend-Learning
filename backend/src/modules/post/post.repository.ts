@@ -1,6 +1,6 @@
 import { prisma } from "../../lib/prisma.js";
 import { IPostRepository } from "./post.interface.js";
-import { Post } from "../../../generated/prisma/index.js";
+import { Post } from "@prisma/client";
 
 
 

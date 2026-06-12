@@ -1,4 +1,5 @@
-import { Comment } from "../../../generated/prisma/index.js";
+
+import { Comment } from "@prisma/client";
 import { prisma } from "../../lib/prisma.js";
 import { ICommentRepository } from "./comment.interface.js";
 

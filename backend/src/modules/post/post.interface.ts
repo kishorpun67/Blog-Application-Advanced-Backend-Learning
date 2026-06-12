@@ -1,5 +1,5 @@
-import { Post } from "../../../generated/prisma/index.js";
 
+import { Post } from "@prisma/client";
 
 export interface IPostRepository {
     createPost(data :{title: string;

@@ -2,7 +2,7 @@
 
 generator client {
   provider = "prisma-client-js"
-  output   = "../generated/prisma"   // ← Removed for now (recommended)
+  // output   = "../generated/prisma"   // ← Removed for now (recommended)
 }
 
 datasource db {

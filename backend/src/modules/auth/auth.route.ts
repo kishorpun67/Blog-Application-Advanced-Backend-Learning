@@ -22,14 +22,24 @@ router.route("/refreshToken").post(
         validate(refeshTokenSchema),
         refreshTokenController)
 
+<<<<<<< HEAD
 router.route("/me").get(verifyUser(authService), currentUserController)
+=======
+router.route("/me").get(verifyUser, currentUserController)
+>>>>>>> f3915a3 (last commit)
 router.route("/logout").post(
     // (req,res:Response)=>{
     //     return res.send(req.body)
     // },
+<<<<<<< HEAD
     verifyUser(authService), 
     logoutController)
 router.route("/logout-all").post(verifyUser(authService), logoutAllController)
+=======
+    verifyUser, 
+    logoutController)
+router.route("/logout-all").post(verifyUser, logoutAllController)
+>>>>>>> f3915a3 (last commit)
 
 
     
