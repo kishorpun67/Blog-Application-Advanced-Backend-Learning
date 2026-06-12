@@ -21,11 +21,8 @@ app.get('/', (req: Request, res:Response)=>{
 })
 import authRouter from "./modules/auth/auth.route.js"
 import postRouter from "./modules/post/post.route.js"
-<<<<<<< HEAD
-import commentRouter from "./modules/comment/commnt.route.js"
-=======
 import commentRouter from "./modules/comment/comment.route.js"
->>>>>>> f3915a3 (last commit)
+
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/post", postRouter)
 app.use("/api/v1/comment", commentRouter)
