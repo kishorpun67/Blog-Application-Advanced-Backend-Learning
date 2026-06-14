@@ -20,9 +20,11 @@ export class PostService {
         }
         return await this.repo.createPost({...body, userId, imageUrl} )
     }
-
-    async getUserPosts(userId:string) {
-        return this.repo.getPostsByUserId(userId)
+    async getAllPosts() {
+        return await this.repo.getAllPosts()
+    }
+    async getUserPosts(userId:string, cursor?:string, limit?:number) {
+        return this.repo.getPostsByUserId(userId, cursor, limit)
     }
 
     async getPost(postId:string ,userId:string ) {

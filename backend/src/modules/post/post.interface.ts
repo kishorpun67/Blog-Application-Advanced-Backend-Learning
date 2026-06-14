@@ -7,8 +7,9 @@ export interface IPostRepository {
         userId: string;
         imageUrl?: string }) :Promise<Post>
     getPostsByUserId(
-        userId:string
-    ):Promise <Post []>
+        userId:string,
+        cursor?: string, limit?: number    ):Promise <Post []>
+    getAllPosts(cursor?:string, limit?:number):Promise <Post[] | null> 
     getPostByPostIdAndUserId(
         postId:string, 
         userId:string

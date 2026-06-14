@@ -18,7 +18,9 @@ export const createPostController = asyncHandler(async(req:Request, res:Response
 }) 
 
 export const getUserPostsController = asyncHandler(async(req:Request, res:Response)=>{
-    const result = await postService.getUserPosts(req.userId as string)
+
+    const limit = Math.max(1, Number(req.query.limit) || 10) 
+    const result = await postService.getUserPosts(req.userId as string, req.query.cursor  as string, limit)
     return res.status(200).json({
         success:true,
         message:'Your posts has been fetch succesfully',
@@ -26,6 +28,17 @@ export const getUserPostsController = asyncHandler(async(req:Request, res:Respon
     })
 
 })
+export const getAllPostController = asyncHandler(async(req:Request, res:Response)=>{
+    const result = await postService.getAllPosts()
+    return res.status(200).json({
+        success:true,
+        message:'All posts',
+        data:result
+    })
+
+})
+
+
 
 export const getPostController = asyncHandler(async(req:Request, res:Response)=>{
     const result = await postService.getPost(req.params.id as string , req.userId as string)

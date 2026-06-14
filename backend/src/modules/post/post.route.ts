@@ -3,7 +3,7 @@ import { validate } from "../../middleware/validate.middleware.js"
 import { createPostSchema, updatePostSchema } from "./post.schema.js"
 import { verifyUser } from "../../middleware/auth.middleware.js"
 import { upload } from "../../middleware/multer.middleware.js"
-import { createPostController, deletePostController, getPostController, getUserPostsController, updatePostController } from "./post.controller.js"
+import { createPostController,getAllPostController, deletePostController, getPostController, getUserPostsController, updatePostController } from "./post.controller.js"
 
 
 const router = Router()
@@ -48,5 +48,9 @@ router.route("/:id").patch(
 router.route("/:id").delete(
     verifyUser,
     deletePostController
+)
+router.route("/posts").delete(
+    verifyUser,
+    getAllPostController
 )
 export default router

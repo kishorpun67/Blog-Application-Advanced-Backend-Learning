@@ -1,6 +1,8 @@
+import { tr } from "zod/v4/locales";
 import { prisma } from "../../lib/prisma.js";
 import { IPostRepository } from "./post.interface.js";
 import { Post } from "@prisma/client";
+import { email } from "zod";
 
 
 
@@ -21,11 +23,48 @@ export class PostRepository implements IPostRepository{
         
     }
 
-    async getPostsByUserId(userId: string): Promise<Post []> {
+    async getPostsByUserId(userId: string,cursor?: string, limit?:number): Promise<Post[]> {
         return await prisma.post.findMany({
             where:{
                 userId
+            },            
+            orderBy:{
+                createdAt: "desc"
+            },
+            select:{
+                id:true,
+                title:true,
+                description:true,
+                imageUrl:true,
+                createdAt:true,
+                comments:true,
+                author:{
+                    select:{
+                        id:true,
+                        email:true,
+                        username:true,
+                        createdAt:true,
+                    }
+                }
+            },
+            take:limit,
+            skip:cursor ? 1:0,
+            cursor:cursor ?{ id:cursor} : undefined,
+           
+        })
+    }
+    async getAllPosts(cursor?: string, limit?: number): Promise<Post[] | null> {
+        return await prisma.post.findMany({
+            where:{
+                userId:"fb77b133-2d13-4671-826b-7919b3413b8b"
             }
+            // ,
+            // take:limit,
+            // skip:cursor ? 1:0,
+            // cursor:cursor ?{ id:cursor} : undefined,
+            // include:{
+            //     comments:true
+            // }
         })
     }
     async getPostByPostId(postId: string): Promise<Post | null> {
@@ -48,7 +87,14 @@ export class PostRepository implements IPostRepository{
             },
             include:{
                 comments:true,
-                author:true
+                author:{
+                    select:{
+                        id:true,
+                        username:true,
+                        email:true,
+                        createdAt:true
+                    }
+                }
             },
             
         })
